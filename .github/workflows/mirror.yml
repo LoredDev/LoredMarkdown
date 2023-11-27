@@ -8,8 +8,8 @@ on:
 
 jobs:
   mirror:
-    if: github.repository == 'loreddev/marknow'
+    if: github.repository == 'loreddev/loredmarkdown'
     uses: loreddev/.github/.github/workflows/mirrors.yml@main
     secrets: inherit
     with:
-      codeberg-repo: https://codeberg.org/LoredDev/MarkNow
+      codeberg-repo: https://codeberg.org/LoredDev/LoredMarkdown
