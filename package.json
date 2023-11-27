@@ -9,7 +9,6 @@
 		"prepare": "husky install",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"dev": "vercel dev",
 		"release": "changeset publish"
 	},
 	"keywords": [],
