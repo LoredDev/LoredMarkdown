@@ -13,11 +13,15 @@
 		"alwaysStrict": true,
 	},
 	"include": [
+		"./**/*.test.js",
 		"./src/**/*.js",
 		"./api/**/*.js",
 		"./packages/*/src/**/*.js",
 		"./commitlint.config.cjs",
 		"./eslint.config.js"
 	],
-	"exclude": ["./node_modules/**", ".dist"]
+	"exclude": [
+		"./node_modules/**",
+		".dist"
+	]
 }

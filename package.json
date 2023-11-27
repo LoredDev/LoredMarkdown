@@ -5,6 +5,7 @@
 	"private": true,
 	"main": "index.js",
 	"scripts": {
+		"test": "vitest",
 		"prepare": "husky install",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
