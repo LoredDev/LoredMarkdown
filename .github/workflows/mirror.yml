@@ -1,0 +1,15 @@
+name: 🪞 Repository Mirrors
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  mirror:
+    if: github.repository == 'loreddev/marknow'
+    uses: loreddev/.github/.github/workflows/mirrors.yml@main
+    secrets: inherit
+    with:
+      codeberg-repo: https://codeberg.org/LoredDev/MarkNow

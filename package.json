@@ -1,0 +1,31 @@
+{
+	"name": "LoredMarkdown",
+	"version": "0.0.0",
+	"description": "",
+	"private": true,
+	"main": "index.js",
+	"scripts": {
+		"prepare": "husky install",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"dev": "vercel dev"
+	},
+	"keywords": [],
+	"type": "module",
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@changesets/cli": "^2.26.2",
+		"@commitlint/config-conventional": "^18.4.3",
+		"@commitlint/types": "^18.4.3",
+		"@vercel/node": "^3.0.11",
+		"eslint": "^8.54.0",
+		"husky": "^8.0.0",
+		"turbo": "^1.10.16",
+		"vercel": "^32.5.6",
+		"vitest": "^0.34.6"
+	},
+	"dependencies": {
+		"@eslegant/js": "0.0.0-next-20230910004746"
+	}
+}

@@ -1,0 +1,19 @@
+name: ▲ Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - 🧪 Code checking
+      - 🎉 Release
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'loreddev/marknow' }}
+    uses: loreddev/.github/.github/workflows/vercel-deploy.yml@main
+    secrets: inherit
+    with:
+      production: true

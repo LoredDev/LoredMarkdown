@@ -1,0 +1,49 @@
+name: PNPM Setup
+
+inputs:
+  node-version:
+    required: false
+    type: number
+    default: 18
+  pnpm-version:
+    required: false
+    type: number
+    default: 8
+  install-deps:
+    required: false
+    type: boolean
+    default: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install PNPM
+      uses: pnpm/action-setup@v2
+      id: pnpm-install
+      with:
+        version: ${{ inputs.pnpm-version }}
+        run_install: false
+
+    - name: Get store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys:
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Install dependencies
+      if: inputs.install-deps
+      run: pnpm install
+      shell: bash

@@ -1,0 +1,49 @@
+name: 🦋 Release branch
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  update-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    name: Update/Create release branch
+    env:
+      HUSKY: 0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/pnpm-setup
+
+      - name: Update release PR
+        id: changesets
+        uses: loreddev/changeset-action@main
+        with:
+          branch: main
+          commit: 'ci: 👷🦋 version packages'
+          title: 🦋 Release branch
+          publish: pnpm run release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update dev branch
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: changeset-release/main
+          target_branch: dev
+          message: 'ci: 👷 update dev branch'
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,23 @@
+name: ▲ Deploy preview
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+      - main
+      - changeset-release/main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  deploy:
+    if: github.repository == 'loreddev/marknow'
+    uses: loreddev/.github/.github/workflows/vercel-deploy.yml@main
+    secrets: inherit
+    with:
+      production: false
