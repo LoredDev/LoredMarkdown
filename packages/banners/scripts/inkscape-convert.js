@@ -1,3 +1,11 @@
+// eslint-disable-next-line jsdoc/no-bad-blocks
+/* eslint-disable
+@typescript-eslint/no-unsafe-argument,
+@typescript-eslint/no-unsafe-member-access,
+@typescript-eslint/no-unsafe-assignment,
+@typescript-eslint/no-unsafe-call,
+*/
+
 import process from 'node:process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -17,13 +25,9 @@ const paths = process.argv
  */
 function crawl(el, callback) {
 	for (const child of el.childNodes) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		callback(child);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-		if (child.nodeType === child.ELEMENT_NODE) {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		if (child.nodeType === child.ELEMENT_NODE)
 			crawl(child, callback);
-		}
 	}
 }
 
@@ -40,7 +44,6 @@ function covert(file) {
 		if (e.tagName === undefined || !e.hasAttributes()) return;
 
 		/** @type {string | null } */
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const label = e.getAttribute('inkscape:label');
 		if (!label)	return;
 
@@ -48,7 +51,6 @@ function covert(file) {
 
 		for (const attr of e.attributes) {
 			// eslint-disable-next-line max-len
-			/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 			if (attr.name.startsWith('inkscape:'))
 				e.removeAttribute(attr.name);
 			/* eslint-enable */
