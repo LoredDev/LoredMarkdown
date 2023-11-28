@@ -10,13 +10,14 @@
 		"strict": true,
 		"module": "ES2022",
 		"target": "ES2022",
-		"alwaysStrict": true,
+		"alwaysStrict": true
 	},
 	"include": [
 		"./**/*.test.js",
 		"./src/**/*.js",
 		"./api/**/*.js",
 		"./packages/*/src/**/*.js",
+		"./packages/*/scripts/**/*.js",
 		"./commitlint.config.cjs",
 		"./eslint.config.js"
 	],
