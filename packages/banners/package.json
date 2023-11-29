@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"type": "module",
-	"name": "banners",
+	"name": "@LoredMarkdown/banners",
 	"version": "0.0.0",
 	"description": "",
 	"main": "index.js",
