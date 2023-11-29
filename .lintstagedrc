@@ -1,0 +1,4 @@
+{
+	"gitDir": "./.git",
+	"*": "eslint --fix"
+}
