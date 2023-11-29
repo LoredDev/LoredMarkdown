@@ -13,12 +13,12 @@ type BannerObject = DeepReadonly<{
 	repository?: {
 		contributors?: boolean,
 		issues?: boolean,
-		pull_requests?: boolean,
+		pullRequests?: boolean,
 		starts?: boolean,
 		url: string,
 	} | string,
 	subtitle?: string,
-	text_color?: {
+	textColor?: {
 		icon?: string,
 		subtitle?: string,
 		title: string,
@@ -26,10 +26,15 @@ type BannerObject = DeepReadonly<{
 	title: string,
 }>;
 
+interface BannerConfig {
+	document: Document,
+	fetch(info: RequestInfo | URL, init: RequestInit): Promise<Response>,
+}
+
 declare class Banner {
-	public constructor(banner: BannerObject);
+	public constructor(banner: BannerObject, config?: BannerConfig);
 	public toString(): string;
 }
 
-export { Banner, type BannerObject };
+export { Banner, type BannerConfig, type BannerObject };
 
