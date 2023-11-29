@@ -1,9 +1,7 @@
 {
 	"extends": "../../jsconfig.json",
 	"include": [
-		"./src/**/*.js",
-		"./scripts/**/*.js",
-		"./types.d.ts",
-		"./index.d.ts"
+		"./src/**/*",
+		"./scripts/**/*.js"
 	]
 }
