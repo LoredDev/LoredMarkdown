@@ -26,6 +26,7 @@ function htmlToString(element, document) {
 	tmp.appendChild(element);
 	return tmp.innerHTML;
 }
+
 /**
  * @typedef {{
  * modify(query: string, callback: (el: Element | null) => T): T
@@ -51,6 +52,62 @@ function domHelper(element) {
 }
 
 /**
+ * @typedef {{
+ * getTranslate(): [number, number],
+ * getFontSize(): { value: number, type: string },
+ * }} RegexHelper
+ * @param {Readonly<string>} string - The string to get values from.
+ * @returns {RegexHelper}
+ */
+function regexHelper(string) {
+	// TODO (@guz013) [>=1.0.0]: Prevent possible ReDoS attacks.
+	/* eslint-disable security/detect-unsafe-regex */
+	return {
+		/**
+		 * Gets the value from `font-size` of a style string.
+		 * Returns 0px if none is found.
+		 *
+		 * @returns {{value: number, type: string}}
+		 */
+		getFontSize() {
+			if (!string.includes('font-size'))
+				return { type: 'px', value: 0 };
+
+			const fontSizeRegex = /font-size:(?:[^;]+)/gu;
+			const match = string.match(fontSizeRegex)?.[0].split(':')[1];
+
+			const type = [...match ?? '']
+				.filter(l => !'1234567890.'.includes(l))
+				.join('');
+
+			if (match) return { type, value: Number.parseFloat(match) };
+
+			return { type: 'px', value: 0 };
+		},
+		/**
+		 * Gets the `translate` x,y values from a transform string.
+		 * Returns [0,0] if none is found.
+		 *
+		 * @returns {[number, number]}
+		 */
+		getTranslate() {
+			if (!string.includes('translate')) return [ 0, 0 ];
+
+			const translateRegex = /translate\((?:[^,]+),(?:[^)]+)\)/gu;
+
+			const match = [...(string.match(translateRegex)?.[0] ?? '')]
+				.filter(l => Number.parseFloat(l));
+
+			return [
+				Number.parseFloat(match[0] ?? '0'),
+				Number.parseFloat(match[1] ?? '0'),
+			];
+		},
+	};
+	/* eslint-enable */
+}
+
+/**
  * @param {BannerObject} object - The Banner Object to be generated from.
  * @returns {Promise<string>} - The SVG of the banner.
  */
@@ -59,7 +116,7 @@ async function banner(object) {
 	// @ts-expect-error because Document is not compatible with Readonly<Document>
 	const doc = object.lib?.document ?? globalThis.document;
 	/** @type {Readonly<string>} */
-	const svg = await getLocalLayout('vertical');
+	const svg = await getLocalLayout('horizontal', true);
 
 	const dom = stringToHtml(svg, doc);
 	const helper = domHelper(dom);
@@ -68,13 +125,29 @@ async function banner(object) {
 		if (!el) return;
 
 		el.innerHTML = object.title;
+		if (!object.subtitle) {
+			const transform = el.parentElement?.getAttribute('transform');
+			const coords = regexHelper(transform ?? '').getTranslate();
+			coords[1] += 3;
+
+			el.parentElement?.setAttribute('transform', `${transform ?? ''} translate(${coords.join(',')})`);
+
+
+			const styles = el.getAttribute('style');
+			const size = regexHelper(styles ?? '').getFontSize();
+
+			el.setAttribute('style', `${styles};font-size:${size.value + 2}${size.type};`);
+		}
 	});
+
 	helper.modify('[data-banner-class="subtitle"] > tspan', (el) => {
 		if (!el) return;
 		el.innerHTML = object.subtitle ?? '';
 	});
+
 	return htmlToString(dom, doc);
 }
+
 /**
  * Test function.
  */
