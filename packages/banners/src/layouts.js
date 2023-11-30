@@ -15,9 +15,12 @@ async function getLocalLayout(layout, rtl = false) {
 			break;
 		}
 		default: {
-			if (rtl)
+			if (rtl) {
 				layoutFile = await import('../static/horizontal-rtl.svg.js');
+				break;
+			}
 			layoutFile = await import('../static/horizontal.svg.js');
+			break;
 		}
 	}
 	/* eslint-enable */
