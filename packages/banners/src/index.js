@@ -2,6 +2,7 @@
  * @typedef {import('./index.js').BannerObject} BannerObject
  */
 import getLocalLayout from './layouts.js';
+import { isValidIcon } from './utils.js';
 
 /**
  * @param {Readonly<string>} string - The string to be converted.
@@ -29,13 +30,26 @@ function htmlToString(element, document) {
 
 /**
  * @typedef {{
- * modify(query: string, callback: (el: Element | null) => T): T
+ * modify(query: string, callback: (el: Element | null) => T): T,
+ * asyncModify(query: string, callback: (el: Element | null) => Promise<T>): Promise<T>,
  * }} DOMHelper
  * @param {Element} element - The element to be manipulated.
  * @returns {DOMHelper}
  */
 function domHelper(element) {
 	return {
+		/**
+		 * @template T
+		 * @param {string} query - The query selector to find the element.
+		 * @param {(el: Element | null) => Promise<T>} callback - Callback to modify the element.
+		 * @returns {Promise<T>} - The return value of the callback.
+		 * @throws {Error} - Throws if the element is not found.
+		 */
+		async asyncModify(query, callback) {
+			const el = element.querySelector(query);
+
+			return callback(el);
+		},
 		/**
 		 * @template T
 		 * @param {string} query - The query selector to find the element.
@@ -115,11 +129,35 @@ async function banner(object) {
 	/** @type {Document} */
 	// @ts-expect-error because Document is not compatible with Readonly<Document>
 	const doc = object.lib?.document ?? globalThis.document;
+	/** @type {(info: URL | RequestInfo, init?: RequestInit) => Promise<Response>} */
+	// @ts-expect-error because fetch is Readonly in Banner object;
+	const lFetch = object.lib?.fetch ?? globalThis.fetch;
 	/** @type {Readonly<string>} */
-	const svg = await getLocalLayout('horizontal', true);
+	const svg = await getLocalLayout('horizontal');
 
 	const dom = stringToHtml(svg, doc);
 	const helper = domHelper(dom);
+
+	await helper.asyncModify('[data-banner-class="icon"]', async (el) => {
+		if (!el || !object.icon || !isValidIcon(object.icon)) return;
+
+		const [ iconSet, iconName ] = object.icon.split(':');
+
+		const res = await lFetch(`https://api.iconify.design/${iconSet}/${iconName}.svg`);
+
+		const resSvg = stringToHtml(await res.text(), doc);
+
+		resSvg.setAttribute('x', '22');
+		resSvg.setAttribute('y', '33');
+		resSvg.setAttribute('width', '13');
+		resSvg.setAttribute('height', '13');
+
+		if (resSvg.children[0].getAttribute('fill') === 'currentColor')
+			resSvg.children[0].setAttribute('fill', '#000000');
+
+		// eslint-disable-next-line require-atomic-updates
+		el.innerHTML = htmlToString(resSvg, doc);
+	});
 
 	helper.modify('[data-banner-class="title"] > tspan', (el) => {
 		if (!el) return;
@@ -153,11 +191,13 @@ async function banner(object) {
  */
 async function test() {
 	const testBanner = await banner({
+		icon: 'solar:4k-bold',
 		lib: {
 			// @ts-expect-error because Document is not DeepReadonly<Document>
 			document: new Document(),
 			fetch,
 		},
+		subtitle: 'this is a test with icon',
 		title: 'Hello, world',
 	});
 
