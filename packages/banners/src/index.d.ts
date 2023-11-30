@@ -10,6 +10,13 @@ type BannerObject = DeepReadonly<{
 		rtl: boolean,
 		type: BuiltinLayouts,
 	} | string,
+	lib?: {
+		document: Document,
+		fetch?: ((
+			info: RequestInfo | URL,
+			init?: RequestInit
+		) => Promise<Response>) | undefined,
+	},
 	repository?: {
 		contributors?: boolean,
 		issues?: boolean,
@@ -26,15 +33,10 @@ type BannerObject = DeepReadonly<{
 	title: string,
 }>;
 
-interface BannerConfig {
-	document: Document,
-	fetch(info: RequestInfo | URL, init: RequestInit): Promise<Response>,
-}
-
 declare class Banner {
-	public constructor(banner: BannerObject, config?: BannerConfig);
+	public constructor(banner: BannerObject);
 	public toString(): string;
 }
 
-export { Banner, type BannerConfig, type BannerObject };
+export { Banner, type BannerObject };
 
