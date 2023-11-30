@@ -6,18 +6,18 @@ import getLocalLayout from './layouts.js';
 /**
  * @param {Readonly<string>} string - The string to be converted.
  * @param {Document} document - The document API to be used.
- * @returns {HTMLElement} - The DOM of the string.
+ * @returns {Element} - The DOM of the string.
  */
 function stringToHtml(string, document) {
 	const tmp = document.createElement('template');
 	tmp.innerHTML = string;
-	/** @type {HTMLElement} */
+	/** @type {Element} */
 	const dom = tmp.children[0];
 	return dom;
 }
 
 /**
- * @param {HTMLElement} element - The element to be converted to string.
+ * @param {Element} element - The element to be converted to string.
  * @param {Document} document - The document API to be used.
  * @returns {string} - The resulting string.
  */
@@ -28,9 +28,9 @@ function htmlToString(element, document) {
 }
 /**
  * @typedef {{
- * modify(query: string, callback: (el: Element | null) => T) => T
+ * modify(query: string, callback: (el: Element | null) => T): T
  * }} DOMHelper
- * @param {HTMLElement} element - The element to be manipulated.
+ * @param {Element} element - The element to be manipulated.
  * @returns {DOMHelper}
  */
 function domHelper(element) {
