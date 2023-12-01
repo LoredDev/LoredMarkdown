@@ -1,3 +1,7 @@
 {
-	"extends": "../../jsconfig.json"
+	"extends": "../../jsconfig.json",
+	"include": [
+		"./src/**/*",
+		"./scripts/**/*.js"
+	]
 }

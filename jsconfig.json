@@ -16,8 +16,6 @@
 		"./**/*.test.js",
 		"./src/**/*.js",
 		"./api/**/*.js",
-		"./packages/*/src/**/*.js",
-		"./packages/*/scripts/**/*.js",
 		"./commitlint.config.cjs",
 		"./eslint.config.js"
 	],

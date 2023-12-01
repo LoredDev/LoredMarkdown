@@ -83,6 +83,9 @@ for (const p of paths) {
 	const file = await fs.readFile(p);
 	const svg = covert(file.toString());
 
+	const fileContent = `/* eslint-disable */\nconst svg = \`${svg}\`;\nexport default svg;`;
+
+	await fs.writeFile(p.replaceAll('.inkscape.svg', '.svg.js'), fileContent);
 	await fs.writeFile(p.replaceAll('.inkscape.svg', '.svg'), svg);
 	// eslint-disable-next-line no-console
 	console.log(`File ${p.replace(process.cwd(), '')} converted!`);
