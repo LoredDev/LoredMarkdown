@@ -16,5 +16,8 @@
 		"@types/node": "^20.10.0",
 		"eslint": "^8.54.0",
 		"linkedom": "^0.16.4"
+	},
+	"dependencies": {
+		"@fredli74/typr": "^0.3.8"
 	}
 }

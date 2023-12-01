@@ -3,6 +3,7 @@
  */
 import getLocalLayout from './layouts.js';
 import { isValidIcon } from './utils.js';
+import fontSvg from './text-svg.js';
 
 /**
  * @param {Readonly<string>} string - The string to be converted.
@@ -197,6 +198,8 @@ async function banner(object) {
 			el.setAttribute('style', `${styles};fill:${object.background};`);
 		},
 	);
+
+	dom.appendChild(stringToHtml(`<g transform="translate(30, 40)"><path d="${fontSvg}" transform="scale(0.01, -0.01)" fill="#ff0000" /></g>`, doc));
 
 	return htmlToString(dom, doc);
 }
