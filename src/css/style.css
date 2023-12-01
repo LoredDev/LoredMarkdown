@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-
 :root {
 	--banner-color: #b1b1b1;
 	--banner-bgc: #000;
@@ -23,7 +22,20 @@ body {
 	background-color: var(--banner-bgc);
 	display: grid;
 	height: 100%;
-	grid-template-columns: 50% 50%;
+	grid-template-columns: repeat(2, 50%);
+}
+
+@media only screen and (max-width: 800px) {
+	.container {
+		grid-template-columns: 100%;
+	}
+	.options-grid-container {
+		justify-items: center;
+	}
+	.options {
+		display: grid;
+		justify-content: center;
+	}
 }
 
 .banner {
@@ -34,12 +46,14 @@ body {
 	justify-self: center;
 	border-radius: 20px;
 	box-shadow: 0px 10px 20px 10px rgb(58, 58, 58);
+	margin: 40px;
 }
 
 .options {
 	background-color: var(--options-bgc);
 	color: white;
 	padding: 70px;
+	overflow: auto;
 }
 
 input::placeholder {
@@ -47,8 +61,6 @@ input::placeholder {
 	text-shadow: none;
 
 }
-
-
 
 label {
 	color: #3c3c3c;
@@ -62,7 +74,6 @@ h1 {
 h1, input {
 	text-shadow: 0 0 5px #fff;
 }
-
 
 .txt-input, select {
 	background: #0a0a0a;
@@ -86,14 +97,11 @@ input:focus, select:focus {
 	box-shadow: 0px 0px 0px 4px #3f3f46;
 }
 
-input {
- 	margin-right: 70px;
-}
-
 .options-grid-container {
 	display: grid;
-	grid-template-columns: 50% 50%;
-	align-items: center;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+/* 	grid-template-columns: 50% 50%;
+ */	align-items: center;
 	row-gap: 30px;
 }
 
