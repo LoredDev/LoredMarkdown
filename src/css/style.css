@@ -25,18 +25,6 @@ body {
 	grid-template-columns: repeat(2, 50%);
 }
 
-@media only screen and (max-width: 800px) {
-	.container {
-		grid-template-columns: 100%;
-	}
-	.options-grid-container {
-		justify-items: center;
-	}
-	.options {
-		display: grid;
-		justify-content: center;
-	}
-}
 
 .banner {
 	background-color: var(--banner-color);
@@ -81,10 +69,10 @@ h1, input {
 	height: 3rem;
 	color: black;
 	border-radius: 6px;
-	width: 300px;
+	width: 18rem;
 	
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 1rem;
+	padding-right: 1rem;
 	font-size: 1.5rem;
 	color: #fff;
 	font-weight: 400;
@@ -100,13 +88,13 @@ input:focus, select:focus {
 .options-grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-/* 	grid-template-columns: 50% 50%;
- */	align-items: center;
+	align-items: center;
 	row-gap: 30px;
 }
 
 #layout {
 	color: #404040;
+	width: calc(20rem + 2px);
 }
 
 
@@ -174,7 +162,7 @@ label {
 	background: none;
 	justify-self: start;
 	height: 3rem;
-	width: 300px;
+	width: calc(20rem + 2px);
 	border-radius: 6px;
 	border: solid 1px #404040;
 
@@ -189,4 +177,18 @@ label {
 
 .container > div {
 	row-gap: 100 px;
+}
+
+@media only screen and (max-width: 800px) {
+	.container {
+		grid-template-columns: 100%;
+	}
+	.options-grid-container {
+		justify-items: center;
+	}
+	.options {
+		display: grid;
+		justify-content: center;
+		overflow-x: hidden;
+	}
 }
