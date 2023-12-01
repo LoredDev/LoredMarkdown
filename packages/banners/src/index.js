@@ -183,6 +183,21 @@ async function banner(object) {
 		el.innerHTML = object.subtitle ?? '';
 	});
 
+	helper.modify(
+		'[data-banner-class="background"] > [data-banner-class="solid-color"]',
+		(el) => {
+			if (
+				!el ||
+				!object.background ||
+				!(typeof object.background === 'string') ||
+				!object.background.toString().startsWith('#')
+			) return;
+
+			const styles = el.getAttribute('style');
+			el.setAttribute('style', `${styles};fill:${object.background};`);
+		},
+	);
+
 	return htmlToString(dom, doc);
 }
 
@@ -191,6 +206,7 @@ async function banner(object) {
  */
 async function test() {
 	const testBanner = await banner({
+		background: '#ffff00',
 		icon: 'solar:4k-bold',
 		lib: {
 			// @ts-expect-error because Document is not DeepReadonly<Document>
