@@ -4,6 +4,9 @@
 	--banner-color: #b1b1b1;
 	--banner-bgc: #000;
 	--options-bgc: #0a0a0a;
+	--border-color: #404040;
+	--dark-txt-color: #404040;
+	--light-txt-color: #ffffff;
 }
 
 html, body {
@@ -38,20 +41,19 @@ body {
 }
 
 .options {
-	background-color: var(--options-bgc);
+	/* background-color: var(--options-bgc); */
 	color: white;
 	padding: 70px;
-	overflow: auto;
-}
+/* 	overflow: auto;
+ */}
 
 input::placeholder {
-	color:#404040;
+	color: var(--dark-txt-color);
 	text-shadow: none;
-
 }
 
 label {
-	color: #3c3c3c;
+	color: var(--dark-txt-color);
 	font-size: 1.5rem;
 }
 
@@ -63,23 +65,23 @@ h1, input {
 	text-shadow: 0 0 5px #fff;
 }
 
-.txt-input, select {
-	background: #0a0a0a;
-	border: solid 1px #404040;
+.txt-input, select, .style-layout > input[type="color"] {
+	background: var(--options-bgc);
+	border: solid 1px var(--border-color);
 	height: 3rem;
-	color: black;
 	border-radius: 6px;
-	width: 18rem;
+	width: 20rem;
 	
 	padding-left: 1rem;
 	padding-right: 1rem;
 	font-size: 1.5rem;
-	color: #fff;
+	color: var(--light-txt-color);
 	font-weight: 400;
 	transition: all .2s ease-in-out;
+	box-sizing: border-box;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, .style-layout > input[type="color"]:focus {
 	outline: none !important;
 	border: solid 1px #a3a3a3 ;
 	box-shadow: 0px 0px 0px 4px #3f3f46;
@@ -88,13 +90,12 @@ input:focus, select:focus {
 .options-grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-	align-items: center;
+	align-items: start;
 	row-gap: 30px;
 }
 
 #layout {
-	color: #404040;
-	width: calc(20rem + 2px);
+	color: var(--dark-txt-color);
 }
 
 
@@ -114,6 +115,8 @@ input[type="radio"], input[type="checkbox"] {
 	border-radius: 50%;
 
 }
+
+/*checkbox*/
 
 input[type="radio"]:focus, input[type="checkbox"]:focus {
 	border-style: none;
@@ -148,8 +151,12 @@ label {
 	gap: 10px;
 } 
 
-.span-2 {
+.span-all {
 	grid-column: 1 / -1;
+}
+
+#bg-img-link {
+	align-self: center;
 }
 
 .style-layout {
@@ -157,26 +164,8 @@ label {
 	gap: 15px;
 }
 
-.style-layout > input[type="color"] {
-	margin: 0;
-	background: none;
-	justify-self: start;
-	height: 3rem;
-	width: calc(20rem + 2px);
-	border-radius: 6px;
-	border: solid 1px #404040;
-
-}
-
-.style-layout > input[type="color"]:focus {
-	outline: none !important;
-	border: solid 1px #a3a3a3 ;
-	box-shadow: 0px 0px 0px 4px #3f3f46;
-}
-
-
-.container > div {
-	row-gap: 100 px;
+ .style-layout > input[type="color"] {
+	padding: 0;
 }
 
 @media only screen and (max-width: 800px) {
@@ -191,4 +180,12 @@ label {
 		justify-content: center;
 		overflow-x: hidden;
 	}
+}
+
+.centralize-verticaly {
+	display: grid;
+	align-content: center;
+	background-color: var(--options-bgc);
+	overflow: auto;
+	overflow-x: hidden;
 }

@@ -15,73 +15,70 @@
 		<div class="banner">
 
 		</div>
-		<div class="options">
-			<h1>Lored's Markdown</h1>
-			<form class="options-grid-container">
-				<input class="txt-input" type="text" id="title" name="banner-title" placeholder="Title">
-				<input class="txt-input" type="text" id="subtitle" name="banner-subtitle" placeholder="Subtitle">
-				
-				<input class="txt-input" type="url" id="bg-img-link" name="bg-img-link" placeholder="Background Image link">
-				<input class="txt-input" type="url" id="icon" name="icon" placeholder="Icon name or link">
-				<div class="style-layout">
-					<label for="layout">Layout</label>
-					<select class="txt-input" name="layout" id="layout">
-						<option value="horizontal">Horizontal</option>
-						<option value="vertical">Vertical</option>
-					</select>
-				</div>
-
-				<div class="style-layout">
-					<label for="bg-color">Background</label>
-					<input type="color" id="bg-color" name="bg-color">
-				</div>
-
-				<div class="center-txt-vertically span-2" >
-					<input type="checkbox" id="rtl" name="rtl">
-					<label for="rtl">Right-to-left</label>
-				</div>
-				
-				<input class="txt-input span-2" type="url" name="repo-url" id="repo-url" placeholder="Repository url"> 
-
-				<div class="list-of-items">
-					<label for="show-info">Show info:</label>
-					<div class="center-txt-vertically">
-						<input type="checkbox" id="issues" value="issues" name="show-info">
-						<label for="issues">Issues</label><br>
+		<div class="centralize-verticaly">
+			<div class="options">
+				<h1>Lored's Markdown</h1>
+				<form class="options-grid-container">
+					<input class="txt-input" type="text" id="title" name="banner-title" placeholder="Title">
+					<input class="txt-input" type="text" id="subtitle" name="banner-subtitle" placeholder="Subtitle">
+			
+					<input class="txt-input" type="url" id="icon" name="icon" placeholder="Icon name or link">
+					<input class="txt-input" type="url" id="bg-img-link" name="bg-img-link" placeholder="Background Image link">
+					<div class="style-layout">
+						<label for="layout">Layout</label>
+						<select class="txt-input" name="layout" id="layout">
+							<option value="horizontal">Horizontal</option>
+							<option value="vertical">Vertical</option>
+						</select>
+						<div class="center-txt-vertically">
+							<input type="checkbox" id="rtl" name="rtl">
+							<label for="rtl">Right-to-left</label>
+						</div>
 					</div>
-					<div class="center-txt-vertically">
-						<input type="checkbox" id="prs" value="prs" name="show-info">
-						<label for="prs">Pull requests</label><br>
+					<div class="style-layout">
+						<label for="bg-color">Background</label>
+						<input type="color" id="bg-color" name="bg-color">
 					</div>
-					<div class="center-txt-vertically">
-						<input type="checkbox" id="contributors" value="contributors" name="show-info">
-						<label for="contributors">Contributors</label><br>
+			
+					<input class="txt-input span-all" type="url" name="repo-url" id="repo-url" placeholder="Repository url">
+					<div class="list-of-items">
+						<label for="show-info">Show info:</label>
+						<div class="center-txt-vertically">
+							<input type="checkbox" id="issues" value="issues" name="show-info">
+							<label for="issues">Issues</label><br>
+						</div>
+						<div class="center-txt-vertically">
+							<input type="checkbox" id="prs" value="prs" name="show-info">
+							<label for="prs">Pull requests</label><br>
+						</div>
+						<div class="center-txt-vertically">
+							<input type="checkbox" id="contributors" value="contributors" name="show-info">
+							<label for="contributors">Contributors</label><br>
+						</div>
+						<br>
 					</div>
-					<br>	
-				</div>
-
-				<div class="list-of-items">
-					<label for="deco">Event decoration:</label>
-
-					<div class="center-txt-vertically">
-						<input type="radio" id="halloween" value="halloween" name="deco">
-						<label for="halloween">Halloween</label><br>
+					<div class="list-of-items">
+						<label for="deco">Event decoration:</label>
+						<div class="center-txt-vertically">
+							<input type="radio" id="halloween" value="halloween" name="deco">
+							<label for="halloween">Halloween</label><br>
+						</div>
+						<div class="center-txt-vertically">
+							<input type="radio" id="christmas" value="christmas" name="deco">
+						<label for="christmas">Christmas</label><br>
+						</div>
+						<div class="center-txt-vertically">
+							<input type="radio" id="easter" value="easter" name="deco">
+						<label for="easter">Easter</label><br>
+						</div>
+						<div class="center-txt-vertically">
+							<input type="radio" id="pride" value="pride" name="deco">
+							<label for="pride">Pride month</label><br>
+						</div>
+			
 					</div>
-					<div class="center-txt-vertically">
-						<input type="radio" id="christmas" value="christmas" name="deco">
-					<label for="christmas">Christmas</label><br>
-					</div>
-					<div class="center-txt-vertically">
-						<input type="radio" id="easter" value="easter" name="deco">
-					<label for="easter">Easter</label><br>
-					</div>
-					<div class="center-txt-vertically">
-						<input type="radio" id="pride" value="pride" name="deco">
-						<label for="pride">Pride month</label><br>
-					</div>
-					
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
