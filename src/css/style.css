@@ -44,8 +44,9 @@ body {
 	/* background-color: var(--options-bgc); */
 	color: white;
 	padding: 70px;
-/* 	overflow: auto;
- */}
+	overflow: auto;
+	overflow-x: hidden;
+}
 
 input::placeholder {
 	color: var(--dark-txt-color);
@@ -55,6 +56,7 @@ input::placeholder {
 label {
 	color: var(--dark-txt-color);
 	font-size: 1.5rem;
+	align-self: center;
 }
 
 h1 {
@@ -98,11 +100,6 @@ input:focus, select:focus, .style-layout > input[type="color"]:focus {
 	color: var(--dark-txt-color);
 }
 
-
-option {
-	border-radius: 10px;
-}
-
 input[type="radio"], input[type="checkbox"] {
 	-webkit-appearance: none;
 	appearance: none;
@@ -115,8 +112,6 @@ input[type="radio"], input[type="checkbox"] {
 	border-radius: 50%;
 
 }
-
-/*checkbox*/
 
 input[type="radio"]:focus, input[type="checkbox"]:focus {
 	border-style: none;
@@ -132,10 +127,6 @@ input[type="radio"]:checked, input[type="checkbox"]:checked {
 input[type="radio"]:not(:checked), input[type="checkbox"]:not(:checked) {
 	transition: all .5s ease-out;
 	box-shadow: none;
-}
-
-label {
-	align-self: center;
 }
 
 .center-txt-vertically {
@@ -159,7 +150,7 @@ label {
 	align-self: center;
 }
 
-.style-layout {
+.style-layout, .repo-wrapper {
 	display: grid;
 	gap: 15px;
 }
@@ -188,4 +179,16 @@ label {
 	background-color: var(--options-bgc);
 	overflow: auto;
 	overflow-x: hidden;
+}
+
+.repo-wrapper {
+	border: solid 1px var(--dark-txt-color);
+	border-radius: 6px;
+	padding: 1rem;
+	width: 20rem;
+	box-sizing: border-box;
+}
+
+.repo-wrapper > input {
+	width: 100%;
 }

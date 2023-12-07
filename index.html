@@ -40,22 +40,25 @@
 						<input type="color" id="bg-color" name="bg-color">
 					</div>
 			
-					<input class="txt-input span-all" type="url" name="repo-url" id="repo-url" placeholder="Repository url">
-					<div class="list-of-items">
-						<label for="show-info">Show info:</label>
-						<div class="center-txt-vertically">
-							<input type="checkbox" id="issues" value="issues" name="show-info">
-							<label for="issues">Issues</label><br>
+					<div class="repo-wrapper">
+						<label for="repo-url">Repo-Info</label>
+						<input class="txt-input span-all" type="url" name="repo-url" id="repo-url" placeholder="Repository url">
+						<div class="list-of-items">
+							<label for="show-info">Show info:</label>
+							<div class="center-txt-vertically">
+								<input type="checkbox" id="issues" value="issues" name="show-info">
+								<label for="issues">Issues</label><br>
+							</div>
+							<div class="center-txt-vertically">
+								<input type="checkbox" id="prs" value="prs" name="show-info">
+								<label for="prs">Pull requests</label><br>
+							</div>
+							<div class="center-txt-vertically">
+								<input type="checkbox" id="contributors" value="contributors" name="show-info">
+								<label for="contributors">Contributors</label><br>
+							</div>
+							<br>
 						</div>
-						<div class="center-txt-vertically">
-							<input type="checkbox" id="prs" value="prs" name="show-info">
-							<label for="prs">Pull requests</label><br>
-						</div>
-						<div class="center-txt-vertically">
-							<input type="checkbox" id="contributors" value="contributors" name="show-info">
-							<label for="contributors">Contributors</label><br>
-						</div>
-						<br>
 					</div>
 					<div class="list-of-items">
 						<label for="deco">Event decoration:</label>
@@ -75,7 +78,6 @@
 							<input type="radio" id="pride" value="pride" name="deco">
 							<label for="pride">Pride month</label><br>
 						</div>
-			
 					</div>
 				</form>
 			</div>
