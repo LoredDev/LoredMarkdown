@@ -1,13 +1,20 @@
 {
 	"private": true,
-	"name": "banners",
-	"version": "0.0.0",
+	"type": "module",
+	"name": "@LoredMarkdown/banners",
+	"version": "0.1.0",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"lint": "eslint .",
+		"scripts:banners": "node ./scripts/inkscape-convert.js ./static/horizontal.inkscape.svg ./static/horizontal-rtl.inkscape.svg ./static/vertical.inkscape.svg"
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^20.10.0",
+		"eslint": "^8.54.0",
+		"linkedom": "^0.16.4"
+	}
 }
