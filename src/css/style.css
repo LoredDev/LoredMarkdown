@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+	--banner-color: #b1b1b1;
+	--banner-bgc: #000;
+	--options-bgc: #0a0a0a;
+	--border-color: #404040;
+	--dark-txt-color: #404040;
+	--light-txt-color: #ffffff;
+}
+
+html, body {
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	min-height: 100%;
+}
+
+
+.container {
+	background-color: var(--banner-bgc);
+	display: grid;
+	height: 100%;
+	grid-template-columns: repeat(2, 50%);
+}
+
+
+.banner {
+	background-color: var(--banner-color);
+	height: 100px;
+	width: 300px;
+	align-self: center;
+	justify-self: center;
+	border-radius: 20px;
+	box-shadow: 0px 10px 20px 10px rgb(58, 58, 58);
+	margin: 40px;
+}
+
+.options {
+	/* background-color: var(--options-bgc); */
+	color: white;
+	padding: 70px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+input::placeholder {
+	color: var(--dark-txt-color);
+	text-shadow: none;
+}
+
+label {
+	color: var(--dark-txt-color);
+	font-size: 1.5rem;
+	align-self: center;
+}
+
+h1 {
+	font-size: 2.5rem;
+}
+
+h1, input {
+	text-shadow: 0 0 5px #fff;
+}
+
+.txt-input, select, .style-layout > input[type="color"] {
+	background: var(--options-bgc);
+	border: solid 1px var(--border-color);
+	height: 3rem;
+	border-radius: 6px;
+	width: 20rem;
+	
+	padding-left: 1rem;
+	padding-right: 1rem;
+	font-size: 1.5rem;
+	color: var(--light-txt-color);
+	font-weight: 400;
+	transition: all .2s ease-in-out;
+	box-sizing: border-box;
+}
+
+input:focus, select:focus, .style-layout > input[type="color"]:focus {
+	outline: none !important;
+	border: solid 1px #a3a3a3 ;
+	box-shadow: 0px 0px 0px 4px #3f3f46;
+}
+
+.options-grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	align-items: start;
+	row-gap: 30px;
+}
+
+#layout {
+	color: var(--dark-txt-color);
+}
+
+input[type="radio"], input[type="checkbox"] {
+	-webkit-appearance: none;
+	appearance: none;
+	margin: 0;
+	background-color: #3c3c3c;
+	font: inherit;
+	color: currentColor;
+	width:2rem;
+	height: 2rem;
+	border-radius: 50%;
+
+}
+
+input[type="radio"]:focus, input[type="checkbox"]:focus {
+	border-style: none;
+	box-shadow: none;
+}
+
+input[type="radio"]:checked, input[type="checkbox"]:checked {
+	background-color: #fff;
+	transition: all .5s ease-out;
+	box-shadow: 0 0 10px 5px rgb(100, 100, 100);
+}
+
+input[type="radio"]:not(:checked), input[type="checkbox"]:not(:checked) {
+	transition: all .5s ease-out;
+	box-shadow: none;
+}
+
+.center-txt-vertically {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.list-of-items {
+	display: grid;
+	align-items: start;
+	justify-content: start;
+	gap: 10px;
+} 
+
+.span-all {
+	grid-column: 1 / -1;
+}
+
+#bg-img-link {
+	align-self: center;
+}
+
+.style-layout, .repo-wrapper {
+	display: grid;
+	gap: 15px;
+}
+
+ .style-layout > input[type="color"] {
+	padding: 0;
+}
+
+@media only screen and (max-width: 800px) {
+	.container {
+		grid-template-columns: 100%;
+	}
+	.options-grid-container {
+		justify-items: center;
+	}
+	.options {
+		display: grid;
+		justify-content: center;
+		overflow-x: hidden;
+	}
+}
+
+.centralize-verticaly {
+	display: grid;
+	align-content: center;
+	background-color: var(--options-bgc);
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.repo-wrapper {
+	border: solid 1px var(--dark-txt-color);
+	border-radius: 6px;
+	padding: 1rem;
+	width: 20rem;
+	box-sizing: border-box;
+}
+
+.repo-wrapper > input {
+	width: 100%;
+}
