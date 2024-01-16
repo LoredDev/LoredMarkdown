@@ -3,7 +3,6 @@
  */
 import getLocalLayout from './layouts.js';
 import { isValidIcon } from './utils.js';
-import fontSvg from './text-svg.js';
 
 /**
  * @param {Readonly<string>} string - The string to be converted.
@@ -106,7 +105,7 @@ function regexHelper(string) {
 		 * @returns {[number, number]}
 		 */
 		getTranslate() {
-			if (!string.includes('translate')) return [ 0, 0 ];
+			if (!string.includes('translate')) return [0, 0];
 
 			const translateRegex = /translate\((?:[^,]+),(?:[^)]+)\)/gu;
 
@@ -123,6 +122,25 @@ function regexHelper(string) {
 }
 
 /**
+ * @returns {Promise<string>}
+ */
+async function getSvgCSS() {
+	const buffer = await fetch(
+		import.meta.resolve('/packages/banners/static/CalSans-SemiBold.ttf'),
+	);
+	// eslint-disable-next-line unicorn/prefer-code-point, max-len
+	const base64 = btoa(String.fromCharCode(...new Uint8Array(await buffer.arrayBuffer())));
+
+	const css = `
+		@font-face {
+			font-family: 'Cal Sans';
+			src: url('data:application/x-font-ttf;base64,${base64}') format('truetype');
+		}
+	`;
+	return css;
+}
+
+/**
  * @param {BannerObject} object - The Banner Object to be generated from.
  * @returns {Promise<string>} - The SVG of the banner.
  */
@@ -134,15 +152,19 @@ async function banner(object) {
 	// @ts-expect-error because fetch is Readonly in Banner object;
 	const lFetch = object.lib?.fetch ?? globalThis.fetch;
 	/** @type {Readonly<string>} */
-	const svg = await getLocalLayout('horizontal');
+	const layoutSvg = await getLocalLayout('horizontal');
 
-	const dom = stringToHtml(svg, doc);
+	const dom = stringToHtml(layoutSvg, doc);
 	const helper = domHelper(dom);
+
+	await helper.asyncModify('svg > defs', async el =>
+		el?.appendChild(stringToHtml(`<style>${await getSvgCSS()}</style>`, doc)),
+	);
 
 	await helper.asyncModify('[data-banner-class="icon"]', async (el) => {
 		if (!el || !object.icon || !isValidIcon(object.icon)) return;
 
-		const [ iconSet, iconName ] = object.icon.split(':');
+		const [iconSet, iconName] = object.icon.split(':');
 
 		const res = await lFetch(`https://api.iconify.design/${iconSet}/${iconName}.svg`);
 
@@ -171,7 +193,6 @@ async function banner(object) {
 
 			el.parentElement?.setAttribute('transform', `${transform ?? ''} translate(${coords.join(',')})`);
 
-
 			const styles = el.getAttribute('style');
 			const size = regexHelper(styles ?? '').getFontSize();
 
@@ -198,8 +219,6 @@ async function banner(object) {
 			el.setAttribute('style', `${styles};fill:${object.background};`);
 		},
 	);
-
-	dom.appendChild(stringToHtml(`<g transform="translate(30, 40)"><path d="${fontSvg}" transform="scale(0.01, -0.01)" fill="#ff0000" /></g>`, doc));
 
 	return htmlToString(dom, doc);
 }

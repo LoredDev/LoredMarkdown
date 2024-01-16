@@ -24,6 +24,9 @@ importers:
       '@vercel/node':
         specifier: ^3.0.11
         version: 3.0.11
+      cal-sans:
+        specifier: ^1.0.1
+        version: 1.0.1
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -41,10 +44,6 @@ importers:
         version: 0.34.6
 
   packages/banners:
-    dependencies:
-      '@fredli74/typr':
-        specifier: ^0.3.8
-        version: 0.3.8
     devDependencies:
       '@types/node':
         specifier: ^20.10.0
@@ -600,10 +599,6 @@ packages:
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
     engines: {node: '>=14'}
     dev: true
-
-  /@fredli74/typr@0.3.8:
-    resolution: {integrity: sha512-0Wr3arrJUOoF5HyE8/nusPsdOQaUEd9t0dq8GTHBgSakuh543VqQklIpuRWF/nEnoxkIJzHpCYYesWTyEqgrFg==}
-    dev: false
 
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
@@ -1613,6 +1608,10 @@ packages:
   /cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /cal-sans@1.0.1:
+    resolution: {integrity: sha512-XwN3/7jez8WmFVcNnNqO2K9lh133KiIcURCyGFnSM+ZmNZ8zIcOTNfr3SpenLAkRceYsq+fQNX/PL4C1rIkEPQ==}
     dev: true
 
   /call-bind@1.0.5:
