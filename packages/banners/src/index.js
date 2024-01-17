@@ -1,8 +1,12 @@
 /**
  * @typedef {import('./index.js').BannerObject} BannerObject
  */
+// eslint-disable-next-line import/no-unassigned-import
+import 'cal-sans';
+
 import getLocalLayout from './layouts.js';
 import { isValidIcon } from './utils.js';
+
 
 /**
  * @param {Readonly<string>} string - The string to be converted.
@@ -122,25 +126,6 @@ function regexHelper(string) {
 }
 
 /**
- * @returns {Promise<string>}
- */
-async function getSvgCSS() {
-	const buffer = await fetch(
-		import.meta.resolve('/packages/banners/static/CalSans-SemiBold.ttf'),
-	);
-	// eslint-disable-next-line unicorn/prefer-code-point, max-len
-	const base64 = btoa(String.fromCharCode(...new Uint8Array(await buffer.arrayBuffer())));
-
-	const css = `
-		@font-face {
-			font-family: 'Cal Sans';
-			src: url('data:application/x-font-ttf;base64,${base64}') format('truetype');
-		}
-	`;
-	return css;
-}
-
-/**
  * @param {BannerObject} object - The Banner Object to be generated from.
  * @returns {Promise<string>} - The SVG of the banner.
  */
@@ -152,14 +137,10 @@ async function banner(object) {
 	// @ts-expect-error because fetch is Readonly in Banner object;
 	const lFetch = object.lib?.fetch ?? globalThis.fetch;
 	/** @type {Readonly<string>} */
-	const layoutSvg = await getLocalLayout('horizontal');
+	const layoutSvg = await getLocalLayout('horizontal', false);
 
 	const dom = stringToHtml(layoutSvg, doc);
 	const helper = domHelper(dom);
-
-	await helper.asyncModify('svg > defs', async el =>
-		el?.appendChild(stringToHtml(`<style>${await getSvgCSS()}</style>`, doc)),
-	);
 
 	await helper.asyncModify('[data-banner-class="icon"]', async (el) => {
 		if (!el || !object.icon || !isValidIcon(object.icon)) return;
@@ -240,7 +221,7 @@ async function test() {
 	});
 
 	const body = globalThis.document.getElementsByTagName('body')[0];
-	body.innerHTML = testBanner;
+	body.innerHTML += `<span>${testBanner}</span>`;
 }
 await test();
 
