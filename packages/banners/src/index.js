@@ -1,6 +1,7 @@
 /**
  * @typedef {import('./index.js').BannerObject} BannerObject
  */
+import opentype from 'opentype.js';
 // eslint-disable-next-line import/no-unassigned-import
 import 'cal-sans';
 
@@ -125,6 +126,37 @@ function regexHelper(string) {
 	/* eslint-enable */
 }
 
+// eslint-disable-next-line max-len
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+/**
+ * @param {Element} el - The tspan element.
+ * @param {Document} doc - The document object.
+ * @returns {Promise<void>}
+ */
+async function textToPath(el, doc) {
+	const fontFile = await fetch(
+		import.meta.resolve('/packages/banners/static/CalSans-SemiBold.ttf'),
+	);
+
+	const x = Number(el.getAttribute('x') ?? 0);
+	const y = Number(el.getAttribute('y') ?? 0);
+
+	const overlay = stringToHtml('<g data-banner-class="overlay"></g>', doc);
+
+	const styles = el.getAttribute('style');
+	const size = regexHelper(styles ?? '').getFontSize();
+
+	const font = opentype.parse(await fontFile.arrayBuffer());
+	const path = font.getPath(el.innerHTML, 0, 0, size.value);
+	const bbox = path.getBoundingBox();
+
+	const svg = path.toSVG(2);
+	overlay.innerHTML += `<g fill="#ff0000" transform="translate(${x - (bbox.x2 / 2)}, ${y})">${svg}</g>`;
+
+	el.parentElement?.parentElement?.appendChild(overlay);
+}
+/* eslint-enable */
+
 /**
  * @param {BannerObject} object - The Banner Object to be generated from.
  * @returns {Promise<string>} - The SVG of the banner.
@@ -137,7 +169,7 @@ async function banner(object) {
 	// @ts-expect-error because fetch is Readonly in Banner object;
 	const lFetch = object.lib?.fetch ?? globalThis.fetch;
 	/** @type {Readonly<string>} */
-	const layoutSvg = await getLocalLayout('horizontal', false);
+	const layoutSvg = await getLocalLayout('vertical', true);
 
 	const dom = stringToHtml(layoutSvg, doc);
 	const helper = domHelper(dom);
@@ -163,31 +195,40 @@ async function banner(object) {
 		el.innerHTML = htmlToString(resSvg, doc);
 	});
 
-	helper.modify('[data-banner-class="title"] > tspan', (el) => {
-		if (!el) return;
+	await helper.asyncModify(
+		'[data-banner-class="title"] > tspan',
+		async (el) => {
+			if (!el) return;
 
-		el.innerHTML = object.title;
-		if (!object.subtitle) {
-			const transform = el.parentElement?.getAttribute('transform');
-			const coords = regexHelper(transform ?? '').getTranslate();
-			coords[1] += 3;
+			el.innerHTML = object.title;
+			if (!object.subtitle) {
+				const transform = el.parentElement?.getAttribute('transform');
+				const coords = regexHelper(transform ?? '').getTranslate();
+				coords[1] += 3;
 
-			el.parentElement?.setAttribute('transform', `${transform ?? ''} translate(${coords.join(',')})`);
+				el.parentElement?.setAttribute('transform', `${transform ?? ''} translate(${coords.join(',')})`);
 
-			const styles = el.getAttribute('style');
-			const size = regexHelper(styles ?? '').getFontSize();
+				const styles = el.getAttribute('style');
+				const size = regexHelper(styles ?? '').getFontSize();
 
-			el.setAttribute('style', `${styles};font-size:${size.value + 2}${size.type};`);
-		}
-	});
+				el.setAttribute('style', `${styles};font-size:${size.value + 2}${size.type};`);
+			}
 
-	helper.modify('[data-banner-class="subtitle"] > tspan', (el) => {
-		if (!el) return;
-		el.innerHTML = object.subtitle ?? '';
-	});
+			await textToPath(el, doc);
+		},
+	);
+
+	await helper.asyncModify(
+		'[data-banner-class="subtitle"] > tspan',
+		async (el) => {
+			if (!el) return;
+			el.innerHTML = object.subtitle ?? '';
+			await textToPath(el, doc);
+		},
+	);
 
 	helper.modify(
-		'[data-banner-class="background"] > [data-banner-class="solid-color"]',
+		'[data-banner-class="solid-color"]',
 		(el) => {
 			if (
 				!el ||
@@ -221,7 +262,7 @@ async function test() {
 	});
 
 	const body = globalThis.document.getElementsByTagName('body')[0];
-	body.innerHTML += `<span>${testBanner}</span>`;
+	body.innerHTML += `${testBanner}`;
 }
 await test();
 
